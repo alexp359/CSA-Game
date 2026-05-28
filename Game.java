@@ -30,8 +30,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
     public void actionPerformed(ActionEvent e){
 		if(e.getSource() == carFPS){
-			if(movingRight) y += 7;
-			if(movingLeft) y -= 7;
+			if(movingRight) y += 8;
+			if(movingLeft) y -= 8;
 
             if(y > 730) y = 730;
             if(y < 198) y = 198;
@@ -65,14 +65,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        Image currFrame = tk.getImage("C:\\Java\\Programs\\CSA Game\\Frames(32)\\frame_" + frameRotation + ".png");
+        Image currFrame = tk.getImage("D:\\Java\\Programs\\CSA Game\\Frames(32)\\frame_" + frameRotation + ".png");
         g.drawImage(currFrame,0,0,this);
 
         g.setColor(Color.BLUE);
         g.drawRect(100,y,300,150);
-        
-        g.setColor(Color.BLACK);
-        g.drawLine(0,198,1920,198);
-        g.drawLine(0,880,1920,880);
     }
 }

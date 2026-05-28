@@ -9,5 +9,6 @@ public class Driver{
         frame.setSize(1920, 1080);
         
         System.out.println("Compiled");
+        
     }
 }
