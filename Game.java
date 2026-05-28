@@ -8,14 +8,13 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     boolean movingRight, movingLeft;
     Timer carFPS, backgroundFPS;
     Toolkit tk;
-    Image bg;
+    Image[] bgArr;
 
     public Game(Frame frame){
         this.frame = frame;
         frame.addKeyListener(this);
         frame.setFocusable(true);
 
-        frameRotation = 1;
         y = 466;
 
         carFPS = new Timer(7, this);
@@ -24,8 +23,16 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         carFPS.start();
         backgroundFPS.start();
 
+        frameRotation = 1;
+
         tk = Toolkit.getDefaultToolkit();
         
+        bgArr = new Image[32];
+
+        for(int i = 0; i < 32; i++){
+            bgArr[i] = tk.getImage("C:\\Java\\Programs\\CSA Game\\Frames (32)\\frame_" + (i + 1) + ".png");
+        }
+
     }
 
     public void actionPerformed(ActionEvent e){
@@ -65,8 +72,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
 
-        Image currFrame = tk.getImage("D:\\Java\\Programs\\CSA Game\\Frames(32)\\frame_" + frameRotation + ".png");
-        g.drawImage(currFrame,0,0,this);
+        Image currFrame = tk.getImage("C:\\Java\\Programs\\CSA Game\\Frames (32)\\frame_" + frameRotation + ".png");
+        g.drawImage(bgArr[frameRotation - 1],0,0,this);
 
         g.setColor(Color.BLUE);
         g.drawRect(100,y,300,150);
