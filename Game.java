@@ -1,17 +1,19 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class Game extends JPanel implements ActionListener, KeyListener{
     Frame frame;
     int y, x, frameRotation;
     boolean movingRight, movingLeft;
-    Timer carFPS, backgroundFPS;
+    Timer carFPS, backgroundFPS, trafficSpawner;
     Toolkit tk;
     Image[] bgArr;
     Image carImage;
-    TrafficCar car;
+    TrafficCar car1,car2;
     Rectangle carRect;
+    ArrayList<TrafficCar> traffic;
 
     public Game(Frame frame){
         this.frame = frame;
@@ -25,9 +27,11 @@ public class Game extends JPanel implements ActionListener, KeyListener{
 
         carFPS = new Timer(7, this);
         backgroundFPS = new Timer(80, this);
+        trafficSpawner = new Timer(700,this);
 
         carFPS.start();
         backgroundFPS.start();
+        trafficSpawner.start();
 
         frameRotation = 1;
 
@@ -36,12 +40,17 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         bgArr = new Image[32];
 
         for(int i = 0; i < 32; i++){
-            bgArr[i] = tk.getImage("D:\\Java\\Programs\\CSA Game\\Frames (32)\\frame_" + (i + 1) + ".png");
+            bgArr[i] = tk.getImage("C:\\Java\\Programs\\CSA Game\\Frames (32)\\frame_" + (i + 1) + ".png");
         }
 
-        carImage = tk.getImage("D:\\Java\\Programs\\CSA Game\\car.png");
+        carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\car.png");
 
-        car = new TrafficCar();
+        car1 = new TrafficCar();
+        car2 = new TrafficCar();
+
+        traffic = new ArrayList<>();
+        traffic.add(car1);
+        traffic.add(car2);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -62,10 +71,18 @@ public class Game extends JPanel implements ActionListener, KeyListener{
             if(frameRotation >= 32) frameRotation = 1;
         }
 
-        if(carRect.intersects(car.getRect())){
-            carFPS.stop();
-            backgroundFPS.stop();
+        if(e.getSource() == trafficSpawner){
+            traffic.add(new TrafficCar());
         }
+
+        for(TrafficCar trafficCar : traffic){
+            if(carRect.intersects(trafficCar.getRect())){
+                carFPS.stop();
+                backgroundFPS.stop();
+            }
+        }
+
+        if(traffic.get(traffic.size() - 1).isOffScreen()) traffic.remove(traffic.size() - 1);
     }
 
     public void keyPressed(KeyEvent e){
@@ -95,6 +112,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         g.setColor(Color.BLUE);
         g.drawRect(carRect.x,carRect.y,carRect.width,carRect.height);
 
-        car.drawCar(g);
+        for(TrafficCar trafficCar : traffic){
+            trafficCar.drawCar(g);
+        }
     }
 }
