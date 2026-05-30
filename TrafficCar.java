@@ -10,7 +10,7 @@ public class TrafficCar implements ActionListener{
     Timer time;
 
     public TrafficCar(){ //Car dimensions: 114 x 56
-        speed = 17 + (int)(Math.random() * 4);
+        speed = 24 + (int)(Math.random() * 4);
         lane = (int)(Math.random() * 3) + 1;
         x = 2200;
 
@@ -18,10 +18,10 @@ public class TrafficCar implements ActionListener{
         else if(lane == 2) y = 480;
         else if(lane == 3) y = 700;
 
-        rect = new Rectangle(x,y,250,125);
+        rect = new Rectangle(x + 20,y,250 - 30,125 - 10);
 
         tk = Toolkit.getDefaultToolkit();
-        carImg = tk.getImage("C:\\Java\\Programs\\CSA Game\\Cars (12)\\car_" + ((int)(Math.random()  * 12) + 1) + ".png");
+        carImg = tk.getImage("C:\\Java\\Programs\\CSA Game\\Traffic Cars (12)\\car_" + ((int)(Math.random()  * 12) + 1) + ".png");
 
         time = new Timer(20,this);
         time.start();
@@ -30,7 +30,7 @@ public class TrafficCar implements ActionListener{
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == time){
             x -= speed;
-            rect.setLocation(x,y);
+            rect.setLocation(x + 20,y);
         }
     }
 
@@ -49,6 +49,6 @@ public class TrafficCar implements ActionListener{
     public void drawCar(Graphics g){
         g.drawImage(carImg,x,y,null);
         g.setColor(Color.RED);
-        g.drawRect(rect.x,rect.y,rect.width,rect.height);
+        //g.drawRect(rect.x,rect.y,rect.width,rect.height);
     }
 }

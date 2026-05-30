@@ -11,8 +11,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     Toolkit tk;
     Image[] bgArr;
     Image carImage;
-    TrafficCar car1,car2;
     Rectangle carRect;
+    TrafficCar car1;
     ArrayList<TrafficCar> traffic;
 
     public Game(Frame frame){
@@ -23,7 +23,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         y = 466;
         x = 100;
 
-        carRect = new Rectangle(x,y,270,122);
+        carRect = new Rectangle(x + 20,y + 15,240,92);
 
         carFPS = new Timer(7, this);
         backgroundFPS = new Timer(80, this);
@@ -43,14 +43,12 @@ public class Game extends JPanel implements ActionListener, KeyListener{
             bgArr[i] = tk.getImage("C:\\Java\\Programs\\CSA Game\\Frames (32)\\frame_" + (i + 1) + ".png");
         }
 
-        carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\car.png");
+        carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\Cars (3)\\car_straight.png");
 
         car1 = new TrafficCar();
-        car2 = new TrafficCar();
-
+        
         traffic = new ArrayList<>();
         traffic.add(car1);
-        traffic.add(car2);
     }
 
     public void actionPerformed(ActionEvent e){
@@ -61,7 +59,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
             if(y > 730) y = 730;
             if(y < 198) y = 198;
 
-            carRect.setLocation(x,y);
+            carRect.setLocation(x + 20,y + 15);
 
 			repaint();
 		}
@@ -88,8 +86,10 @@ public class Game extends JPanel implements ActionListener, KeyListener{
     public void keyPressed(KeyEvent e){
         if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 			movingRight = true;
+            //carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\Cars (3)\\car_right.png");
         }else if(e.getKeyCode() == KeyEvent.VK_LEFT){
 			movingLeft = true;
+            //carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\Cars (3)\\car_left.png");
         }
     }
 
@@ -99,6 +99,8 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         }else if(e.getKeyCode() == KeyEvent.VK_LEFT){
             movingLeft = false;
         }
+
+        carImage = tk.getImage("C:\\Java\\Programs\\CSA Game\\Cars (3)\\car_straight.png");
     }
     public void keyTyped(KeyEvent e){}
 
@@ -110,7 +112,7 @@ public class Game extends JPanel implements ActionListener, KeyListener{
         g.drawImage(carImage,x,y,this);
 
         g.setColor(Color.BLUE);
-        g.drawRect(carRect.x,carRect.y,carRect.width,carRect.height);
+        //g.drawRect(carRect.x,carRect.y,carRect.width,carRect.height);
 
         for(TrafficCar trafficCar : traffic){
             trafficCar.drawCar(g);
